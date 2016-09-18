@@ -1,7 +1,8 @@
 import webapp2
 
+
 form = """
-<form action="/testform">
+<form method="post" action="/testform">
     <input name="q">
     <input type="submit">
 </form>
@@ -13,10 +14,13 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(form)
 
 class TestHandler(webapp2.RequestHandler):
+    def post(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.write(self.request)
+
     def get(self):
         # q = self.request.get("q")
         # self.response.write(q)
-
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.write(self.request)
 

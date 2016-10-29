@@ -24,8 +24,10 @@ class MainPage(Handler):
         self.render("rot13_form.html")
 
     def post(self):
-        message = self.request.get("message")
-        print(message)
+        text = self.request.get("text")
+        cipher = text.encode("rot13")
+        self.render("rot13_form.html", cipher = cipher)
+
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),

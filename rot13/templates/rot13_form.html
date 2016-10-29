@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+{% block content %}
+
+<h1>rot13_form</h1>
+
+<form method="post">
+
+  <label for="message">Write your message here:</label>
+  <textarea rows="10" cols="70" id="message" name="message"></textarea>
+
+  <button type="submit">Encrypt</button>
+
+</form>
+
+{% endblock %}

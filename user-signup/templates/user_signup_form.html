@@ -7,21 +7,35 @@
 
   <div class="username">
     <label for="username">username:</label>
-    <input type="text" id="username" name="username">
-  </div>
-  <div class="password">
-    <label for="password">password:</label>
-    <input type="text" id="password" name="password">
-  </div>
-  <div class="verify">
-    <label for="verify">verify password:</label>
-    <input type="text" id="verify" name="verify">
-  </div>
-  <div class="email">
-    <label for="email">email:</label>
-    <input type="text" id="email" name="email">
+    <input type="text" id="username" name="username" value="{{username}}">
+    {% if error %}
+      <span style="color:red">{{error["username"]}}</span>
+    {% endif %}
   </div>
 
+  <div class="password">
+    <label for="password">password:</label>
+    <input type="password" id="password" name="password">
+    {% if error %}
+      <span style="color:red">{{error["password"]}}</span>
+    {% endif %}
+  </div>
+
+  <div class="verify">
+    <label for="verify">verify password:</label>
+    <input type="password" id="verify" name="verify">
+    {% if error %}
+      <span style="color:red">{{error["verify"]}}</span>
+    {% endif %}
+  </div>
+
+  <div class="email">
+    <label for="email">email:</label>
+    <input type="text" id="email" name="email" value="{{email}}">
+    {% if error %}
+      <span style="color:red">{{error["email"]}}</span>
+    {% endif %}
+  </div>
 
   <button type="submit">Submit</button>
 

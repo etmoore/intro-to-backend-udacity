@@ -58,7 +58,7 @@ class SignupPage(Handler):
             if not valid_email(email):
                 error["email"] = "That's not a valid email"
 
-            self.render("user_signup_form.html",
+            self.redirect("user_signup_form.html",
                         username = username,
                         email = email,
                         error = error)

@@ -43,10 +43,11 @@ class SignupPage(Handler):
         email = self.request.get("email")
 
         if (valid_username(username) and
-            valid_password(password) and
-            password == verify and
-            valid_email(email)):
-            self.render("welcome.html", username = username)
+                valid_password(password) and
+                password == verify and
+                valid_email(email)):
+            self.redirect("/welcome?username=" + username)
+
         else:
             error = {}
             if not valid_username(username):
@@ -58,11 +59,17 @@ class SignupPage(Handler):
             if not valid_email(email):
                 error["email"] = "That's not a valid email"
 
-            self.redirect("user_signup_form.html",
+            self.render("user_signup_form.html",
                         username = username,
                         email = email,
                         error = error)
 
+class WelcomePage(Handler):
+    def get(self):
+        self.render("welcome.html",
+                    username = self.request.get("username"))
+
 app = webapp2.WSGIApplication([
     ('/', SignupPage),
+    ('/welcome', WelcomePage),
     ], debug=True)

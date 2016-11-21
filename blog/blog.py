@@ -38,8 +38,8 @@ class New(Handler):
         self.render("new_post.html")
 
     def post(self):
-        title = self.request.get('title')
-        body = self.request.get('body')
+        title = self.request.get('subject')
+        body = self.request.get('content')
         if title and body:
             p = Post(title=title, body=body)
             p.put()

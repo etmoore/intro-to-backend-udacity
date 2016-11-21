@@ -11,8 +11,9 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 
 class Post(db.Model):
     title = db.StringProperty(required = True)
-    post = db.TextProperty(required = True)
-    created = db.DateTimeProperty(required = True)
+    body = db.TextProperty(required = True)
+    created = db.DateTimeProperty(auto_now_add = True,
+                                  required = True)
 
 class Handler(webapp2.RequestHandler):
     """Renders via jinja2 template engine"""
@@ -28,15 +29,34 @@ class Handler(webapp2.RequestHandler):
 
 class Index(Handler):
     def get(self):
-        self.render("posts.html")
+        posts = db.GqlQuery("Select * from Post "
+                           "ORDER BY created DESC ")
+        self.render("posts.html", posts=posts)
 
 class New(Handler):
     def get(self):
         self.render("new_post.html")
 
+    def post(self):
+        title = self.request.get('title')
+        body = self.request.get('body')
+        if title and body:
+            p = Post(title=title, body=body)
+            p.put()
+
+            permalink = "/%s" % p.key().id()
+            self.redirect(permalink)
+        else:
+            error = "Posts must have a title and body!"
+            self.render("new_post.html", error=error,
+                        title=title, body=body)
+
+
 class Show(Handler):
     def get(self, post_id):
-        self.render("post.html")
+        post_id = int(post_id)
+        post = Post.get_by_id(post_id)
+        self.render("post.html", post=post)
 
 app = webapp2.WSGIApplication([
     ('/', Index),

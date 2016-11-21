@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Blog</title>
+</head>
+<body>
+  <h1>Posts</h1>
+
+  <a href="/newpost"></a><button>New Post</button>
+  <hr>
+
+  {% for post in posts %}
+    <div class="post">
+      <div class="post-title">{{post.title}}</div>
+      <pre class="post-body">{{post.body}}</pre>
+    </div>
+  {% endfor %}
+
+</body>
+</html>

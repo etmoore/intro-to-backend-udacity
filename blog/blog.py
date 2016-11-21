@@ -28,15 +28,15 @@ class Handler(webapp2.RequestHandler):
 
 class Index(Handler):
     def get(self):
-        self.write("posts!")
+        self.render("posts.html")
 
 class New(Handler):
     def get(self):
-        self.write("new post!")
+        self.render("new_post.html")
 
 class Show(Handler):
     def get(self, post_id):
-        self.write("single post!")
+        self.render("post.html")
 
 app = webapp2.WSGIApplication([
     ('/', Index),

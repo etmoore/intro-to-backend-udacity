@@ -7,6 +7,7 @@ import pdb
 
 from google.appengine.ext import db
 
+# Would normally import this from another module
 SECRET = "cebomaxieindy"
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')

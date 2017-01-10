@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+{% block content %}
+
+<h1>User Registration</h1>
+
+<form method="post">
+
+  <div class="username">
+    <label for="username">username:</label>
+    <input type="text" id="username" name="username" value="{{username}}">
+    {% if error %}
+      <span style="color:red">{{error["username"]}}</span>
+    {% endif %}
+  </div>
+
+  <div class="password">
+    <label for="password">password:</label>
+    <input type="text" id="password" name="password" value="{{password}}">
+    {% if error %}
+      <span style="color:red">{{error["password"]}}</span>
+    {% endif %}
+  </div>
+
+  <div class="verify">
+    <label for="verify">verify:</label>
+    <input type="text" id="verify" name="verify" value="{{verify}}">
+    {% if error %}
+      <span style="color:red">{{error["verify"]}}</span>
+    {% endif %}
+  </div>
+
+  <div class="email">
+    <label for="email">email:</label>
+    <input type="text" id="email" name="email" value="{{email}}">
+    {% if error %}
+      <span style="color:red">{{error["email"]}}</span>
+    {% endif %}
+  </div>
+
+</form>
+
+{% endblock %}

@@ -19,8 +19,8 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-class MainPage(Handler):
+class SignupPage(Handler):
     def get(self):
-        self.write('template')
+        self.render("user-signup-form.html")
 
-app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
+app = webapp2.WSGIApplication([('/', SignupPage)], debug=True)

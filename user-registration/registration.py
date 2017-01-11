@@ -47,7 +47,7 @@ class SignupPage(Handler):
             password == verify and
             valid_email(email)):
 
-            self.response.set_cookie('username', username)
+            self.response.set_cookie('username', username, path='/')
             self.redirect("/welcome")
 
         else:

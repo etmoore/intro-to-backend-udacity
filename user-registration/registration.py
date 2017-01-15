@@ -1,13 +1,26 @@
 import os
+import re
+
 import webapp2
 import jinja2
-import re
 
 from google.appengine.ext import db
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                autoescape = True)
+
+def valid_username(username):
+    USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+    return USER_RE.match(username)
+
+def valid_password(password):
+    PASSWORD_RE = re.compile(r"^.{3,20}$")
+    return PASSWORD_RE.match(password)
+
+def valid_email(email):
+    EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
+    return not email or EMAIL_RE.match(email)
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -29,18 +42,6 @@ class SignupPage(Handler):
         password = self.request.get("password")
         verify = self.request.get("verify")
         email = self.request.get("email")
-
-        def valid_username(username):
-            USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
-            return USER_RE.match(username)
-
-        def valid_password(password):
-            PASSWORD_RE = re.compile(r"^.{3,20}$")
-            return PASSWORD_RE.match(password)
-
-        def valid_email(email):
-            EMAIL_RE = re.compile(r"^[\S]+@[\S]+.[\S]+$")
-            return EMAIL_RE.match(email)
 
         if (valid_username(username) and
             valid_password(password) and

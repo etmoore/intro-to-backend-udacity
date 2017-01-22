@@ -55,10 +55,10 @@ class User(db.Model):
     def register(cls, name, pw, email=None):
         pw_hash = make_pw_hash(name, pw)
         return User(name = name,
-                    pw_hash = pw_hash,
-                    email = email)
+                pw_hash = pw_hash,
+                email = email)
 
-#### BLOG STUFF ####
+        #### BLOG STUFF ####
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
@@ -73,8 +73,8 @@ class Handler(webapp2.RequestHandler):
     def set_secure_cookie(self, name, val):
         cookie_val = make_secure_val(val)
         self.response.headers.add_header(
-            'Set-Cookie',
-            '%s=%s; Path=/' % (name, cookie_val))
+                'Set-Cookie',
+                '%s=%s; Path=/' % (name, cookie_val))
 
     def read_secure_cookie(self, name):
         cookie_val = self.request.cookies.get(name)
@@ -101,7 +101,6 @@ class SignupPage(Handler):
 
             u = User.all().filter('name =', username).get()
             if u:
-                print("In here!")
                 error = { "username": "That user already exists." }
                 self.render('user-signup-form.html',
                             error=error,
@@ -131,6 +130,7 @@ class SignupPage(Handler):
                         email=email,
                         error=error)
 
+
 class WelcomePage(Handler):
     def get(self):
         uid = self.read_secure_cookie('user_id')
@@ -143,5 +143,5 @@ class WelcomePage(Handler):
 
 
 app = webapp2.WSGIApplication([('/signup', SignupPage),
-                               ('/welcome', WelcomePage)]
-                               , debug=True)
+                               ('/welcome', WelcomePage)],
+                               debug=True)

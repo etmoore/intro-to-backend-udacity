@@ -168,8 +168,14 @@ class LoginPage(Handler):
             error = {"invalid-credential": "Invalid credentials"}
             self.render("login-form.html", error=error)
 
+class Logout(Handler):
+    def get(self):
+        self.response.delete_cookie('user_id')
+        self.redirect('/signup')
+
 
 app = webapp2.WSGIApplication([('/signup', SignupPage),
                                ('/welcome', WelcomePage),
+                               ('/logout', Logout),
                                ('/login', LoginPage)],
                                debug=True)

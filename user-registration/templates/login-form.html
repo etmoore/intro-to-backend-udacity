@@ -3,22 +3,20 @@
 
 <h1>Login</h1>
 
+{% if error %}
+  <span style="color:red">{{error["invalid-credential"]}}</span>
+{% endif %}
+
 <form method="post">
 
   <div class="username">
     <label for="username">username:</label>
     <input type="text" id="username" name="username" value="{{username}}">
-    {% if error %}
-      <span style="color:red">{{error["username"]}}</span>
-    {% endif %}
   </div>
 
   <div class="password">
     <label for="password">password:</label>
     <input type="text" id="password" name="password" value="{{password}}">
-    {% if error %}
-      <span style="color:red">{{error["password"]}}</span>
-    {% endif %}
   </div>
 
   <button type="submit">Submit</button>

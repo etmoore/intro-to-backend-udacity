@@ -34,6 +34,11 @@ def make_pw_hash(name, pw, salt = None):
     h = hashlib.sha256(name + pw + salt).hexdigest()
     return '%s,%s' % (salt, h)
 
+def confirm_pw(password, pw_hash, name):
+    salt = pw_hash.split(',')[0]
+    h = make_pw_hash(name, password, salt)
+    return h == pw_hash
+
 def valid_username(username):
     USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
     return USER_RE.match(username)
@@ -136,14 +141,32 @@ class WelcomePage(Handler):
         uid = self.read_secure_cookie('user_id')
         if uid:
             user = User.get_by_id(int(uid))
-        if user:
-            self.render('welcome.html', username = user.name)
+            if user:
+                self.render('welcome.html', username = user.name)
         else:
             self.redirect('/signup')
 
 class LoginPage(Handler):
     def get(self):
         self.render('login-form.html')
+
+    def post(self):
+        username = self.request.get('username')
+        password = self.request.get('password')
+        u = User.all().filter("name =", username).get()
+        if not u:
+            error = {"invalid-credential": "Invalid credentials"}
+            self.render("login-form.html", error=error)
+
+        name = u.name
+        pw_hash = u.pw_hash
+        if confirm_pw(password, pw_hash, name):
+            self.login(u)
+            self.redirect('/welcome')
+
+        else:
+            error = {"invalid-credential": "Invalid credentials"}
+            self.render("login-form.html", error=error)
 
 
 app = webapp2.WSGIApplication([('/signup', SignupPage),

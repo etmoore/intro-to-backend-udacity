@@ -6,16 +6,14 @@
 <body>
   <h1>Posts</h1>
 
-  <a href="/newpost">
-    <button>New Post</button>
-  </a>
+  <a href="/newpost">New Post</a>
 
   <hr>
 
   {% for post in posts %}
     <div class="post">
       <div class="post-title">{{post.title}}</div>
-      <pre class="post-body">{{post.body}}</pre>
+      <p class="post-body">{{post.body}}</p>
     </div>
   {% endfor %}
 
